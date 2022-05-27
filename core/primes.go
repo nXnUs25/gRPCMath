@@ -1,7 +1,5 @@
 package core
 
-type Primaries struct{}
-
 /*
 k = 2
 N = 210
@@ -13,7 +11,7 @@ while N > 1:
         k = k + 1
 */
 
-func (p *Primaries) PrimariesAI(number int) (results []int) {
+func (p *Maths) PrimariesAI(number int) (results []int) {
 	k := 2
 	N := number
 

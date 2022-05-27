@@ -4,11 +4,9 @@ import (
 	"log"
 	"net"
 
-	pb "github.com/nXnUs25/gRPCPrims/prim/proto"
+	pb "github.com/nXnUs25/gRPCMath/math/proto"
 	"google.golang.org/grpc"
 )
-
-var addr string = "0.0.0.0:50051"
 
 func main() {
 	lis, err := net.Listen("tcp", addr)
@@ -20,7 +18,7 @@ func main() {
 
 	s := grpc.NewServer()
 	defer s.Stop()
-	pb.RegisterPrimServiceServer(s, &PrimServer{})
+	pb.RegisterMathServiceServer(s, &MathServer{})
 	if err := s.Serve(lis); err != nil {
 		log.Fatalf("Failed to serve %s: %v", addr, err)
 	}

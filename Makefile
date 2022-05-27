@@ -22,11 +22,11 @@ SERVER_BIN = ${SERVER_DIR}
 CLIENT_BIN = $(CLIENT_DIR)
 
 .DEFAULT_GOAL := help
-.PHONY: prim help
-project := prim core
+.PHONY: math help
+project := core math
 
 all: $(project) ## Generate Pbs and builds
-prim: $@ ## Generate Pbs and building client server binaries
+math: $@ ## Generate Pbs and building client server binaries
 core: $@ ## Compiele core logic 
 
 #protoc --go_out=. --go_opt=paths=source_relative --go-grpc_out=. --go-grpc_opt=paths=source_relative proto/*.proto
@@ -43,12 +43,12 @@ clean: clean_pbs ## clean all generated resources
 	rm -rfv ${BIN_DIR}
 
 clean_pbs: ## clean pbs generated files
-	rm -fv prim/${PROTO_DIR}/*.pb.go
+	rm -fv math/${PROTO_DIR}/*.pb.go
 
 rebuild: clean all ## rebuild whole project .. clean and then build all
 
 pbs: ## Generate Pbs
-	protoc -Iprim/${PROTO_DIR} --go_opt=module=${PACKAGE} --go_out=. --go-grpc_opt=module=${PACKAGE} --go-grpc_out=. prim/${PROTO_DIR}/*.proto 
+	protoc -Imath/${PROTO_DIR} --go_opt=module=${PACKAGE} --go_out=. --go-grpc_opt=module=${PACKAGE} --go-grpc_out=. math/${PROTO_DIR}/*.proto 
 
 
 about: ## Display ingo related to the platform Go version and OS

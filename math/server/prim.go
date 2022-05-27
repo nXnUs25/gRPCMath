@@ -3,25 +3,25 @@ package main
 import (
 	"log"
 
-	"github.com/nXnUs25/gRPCPrims/core"
-	pb "github.com/nXnUs25/gRPCPrims/prim/proto"
+	"github.com/nXnUs25/gRPCMath/core"
+	pb "github.com/nXnUs25/gRPCMath/math/proto"
 )
 
 type PrimeCaller interface {
 	PrimariesAI(int) []int
 }
 
-func (p *PrimServer) Primaries(in *pb.PrimRequest, stream pb.PrimService_PrimariesServer) error {
+func (p *MathServer) Primaries(in *pb.PrimRequest, stream pb.MathService_PrimariesServer) error {
 	log.Printf("Primaries excuted: %v", in)
 	num := int(in.GetNumber())
 
-	var pc PrimeCaller = &core.Primaries{}
+	var pc PrimeCaller = &core.Maths{}
 	results := pc.PrimariesAI(num)
 
 	for _, v := range results {
 		stream.Send(
 			&pb.PrimResponse{
-				Number: int32(v),
+				Number: int64(v),
 			},
 		)
 	}

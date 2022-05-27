@@ -1,4 +1,4 @@
-module github.com/nXnUs25/gRPCPrims
+module github.com/nXnUs25/gRPCMath
 
 go 1.18
 

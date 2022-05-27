@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package math;
+option go_package = "github.com/nXnUs25/gRPCMath/math/proto";
+
+import "prims.proto";
+import "sum.proto";
+import "avg.proto";
+
+service MathService {
+    rpc Sum(SumRequest) returns (SumResponse);
+    rpc Primaries (PrimRequest) returns (stream PrimResponse);
+    rpc Avg (stream AvgRequest) returns (AvgResponse);
+}

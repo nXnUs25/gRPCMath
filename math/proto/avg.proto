@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package math;
+option go_package = "github.com/nXnUs25/gRPCMath/math/proto";
+
+message AvgRequest {
+    int64 number = 1;
+}
+
+message AvgResponse {
+    double number = 1;
+}

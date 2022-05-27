@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 
-	pb "github.com/nXnUs25/gRPCPrims/prim/proto"
+	pb "github.com/nXnUs25/gRPCMath/math/proto"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 )
@@ -18,6 +18,7 @@ func main() {
 	}
 	defer conn.Close()
 
-	c := pb.NewPrimServiceClient(conn)
+	c := pb.NewMathServiceClient(conn)
+	getSum(c)
 	getPrims(c)
 }
