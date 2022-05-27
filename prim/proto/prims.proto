@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package prim;
+option go_package = "github.com/nXnUs25/gRPCPrims/prim/proto";
+
+message PrimRequest {
+    int32 number = 1;
+}
+
+message PrimResponse {
+    int32 number = 1;
+}
+
+service PrimService {
+    rpc Primaries (PrimRequest) returns (stream PrimResponse);
+}
