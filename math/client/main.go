@@ -21,4 +21,5 @@ func main() {
 	c := pb.NewMathServiceClient(conn)
 	getSum(c)
 	getPrims(c)
+	getAVG(c)
 }

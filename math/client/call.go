@@ -9,6 +9,7 @@ import (
 )
 
 func getPrims(c pb.MathServiceClient) {
+	log.Println("Primes: ")
 	stream, err := c.Primaries(context.Background(), &pb.PrimRequest{Number: 120})
 	if err != nil {
 		log.Fatalf("Failed to calculate prims: %v", err)
@@ -28,6 +29,7 @@ func getPrims(c pb.MathServiceClient) {
 }
 
 func getSum(c pb.MathServiceClient) {
+	log.Println("Sum: ")
 	res, err := c.Sum(context.Background(), &pb.SumRequest{
 		A: 6,
 		B: 5,
@@ -37,4 +39,30 @@ func getSum(c pb.MathServiceClient) {
 	}
 
 	log.Printf("%v", res.Result)
+}
+
+func getAVG(c pb.MathServiceClient) {
+	log.Println("AVG: ")
+
+	reqs := []*pb.AvgRequest{
+		{Number: 3},
+		{Number: 2},
+		{Number: 4},
+		{Number: 1},
+	}
+
+	stream, err := c.Avg(context.Background())
+	if err != nil {
+		log.Fatalf("Error getting avg: %v", err)
+	}
+
+	for _, req := range reqs {
+		stream.Send(req)
+	}
+
+	res, err := stream.CloseAndRecv()
+	if err != nil {
+		log.Fatalf("Error while closing stream: %v", err)
+	}
+	log.Printf("AVG: %v\n", res.GetNumber())
 }
