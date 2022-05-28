@@ -22,4 +22,5 @@ func main() {
 	getSum(c)
 	getPrims(c)
 	getAVG(c)
+	getMax(c)
 }

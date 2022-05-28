@@ -66,3 +66,51 @@ func getAVG(c pb.MathServiceClient) {
 	}
 	log.Printf("AVG: %v\n", res.GetNumber())
 }
+
+/*
+The client will send a stream of number (1,5,3,6,2,20) and the server will respond with a stream of (1,5,6,20)
+*/
+func getMax(c pb.MathServiceClient) {
+	log.Println("Max:")
+	maxes := []int32{}
+
+	reqs := []*pb.MaxRequest{
+		{Number: 1},
+		{Number: 5},
+		{Number: 3},
+		{Number: 6},
+		{Number: 2},
+		{Number: 20},
+	}
+	stream, err := c.Max(context.Background())
+	if err != nil {
+		log.Fatalf("Error getting max: %v", err)
+	}
+
+	done := make(chan struct{})
+
+	go func() {
+		for _, req := range reqs {
+			stream.Send(req)
+		}
+		stream.CloseSend()
+	}()
+	go func() {
+		for {
+			res, err := stream.Recv()
+
+			if err == io.EOF {
+				break
+			}
+			if err != nil {
+				log.Fatalf("Error while closing stream: %v", err)
+				break
+			}
+			maxes = append(maxes, res.GetMax())
+			log.Printf("Max: %v", res.GetMax())
+		}
+		close(done)
+	}()
+	<-done
+	log.Printf("Max: %v", maxes)
+}

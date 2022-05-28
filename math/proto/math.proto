@@ -6,9 +6,11 @@ option go_package = "github.com/nXnUs25/gRPCMath/math/proto";
 import "prims.proto";
 import "sum.proto";
 import "avg.proto";
+import "max.proto";
 
 service MathService {
     rpc Sum(SumRequest) returns (SumResponse);
     rpc Primaries (PrimRequest) returns (stream PrimResponse);
     rpc Avg (stream AvgRequest) returns (AvgResponse);
+    rpc Max (stream MaxRequest) returns (stream MaxResponse);
 }

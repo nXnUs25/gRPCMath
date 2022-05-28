@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package math;
+option go_package = "github.com/nXnUs25/gRPCMath/math/proto";
+
+message MaxRequest {
+    int32 number = 1;
+}
+
+message MaxResponse {
+    int32 max = 1;
+}
