@@ -6,6 +6,8 @@ import (
 	"log"
 
 	pb "github.com/nXnUs25/gRPCMath/math/proto"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 )
 
 func getPrims(c pb.MathServiceClient) {
@@ -113,4 +115,28 @@ func getMax(c pb.MathServiceClient) {
 	}()
 	<-done
 	log.Printf("Max: %v", maxes)
+}
+
+func getSqrt(c pb.MathServiceClient, req int32) {
+	log.Println("Sqrt: ")
+	res, err := c.Sqrt(context.Background(), &pb.SqrtRequest{
+		Number: req,
+	})
+	if err != nil {
+		// ok variable should tell us if its grpc error
+		e, ok := status.FromError(err)
+
+		if ok {
+			log.Printf("Error message from server: %v", e.Message())
+			log.Printf("Code error from server: %v", e.Code())
+			log.Printf("With details: %v", e.Proto().Details)
+			if e.Code() == codes.InvalidArgument {
+				log.Printf("Wrong value been sent to server: %v, %v", e.Code(), req)
+			}
+		} else {
+			log.Fatalf("A non gRPC error occurred: %v", err)
+		}
+	}
+
+	log.Printf("%v", res.GetNumber())
 }

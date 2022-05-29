@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package math;
+option go_package = "github.com/nXnUs25/gRPCMath/math/proto";
+
+message SqrtRequest {
+    int32 number = 1; // could be uint32 to not accept negative numbers
+}
+
+message SqrtResponse {
+    double number = 1; 
+}

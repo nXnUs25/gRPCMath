@@ -23,4 +23,6 @@ func main() {
 	getPrims(c)
 	getAVG(c)
 	getMax(c)
+	getSqrt(c, -9)
+	getSqrt(c, 9)
 }
